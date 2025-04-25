@@ -1,0 +1,31 @@
+bash
+#!/bin/bash
+
+# Update and upgrade packages
+echo "Updating Termux and installing dependencies..."
+pkg update && pkg upgrade -y
+# Install Python and other necessary tools
+echo "Installing Python, Git, and curl..."
+pkg install python git curl wget nmap -y
+
+# Install Go for Go-based tools (httpx, subfinder, etc.)
+echo "Installing Go..."
+pkg install golang -y
+
+# Install required Python dependencies
+echo "Installing Python dependencies..."
+pip install -r requirements.txt
+
+# Install Go-based tools
+echo "Installing Go-based tools..."
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/ffuf/ffuf@latest
+
+# Add Go binary to PATH (optional)
+echo 'export PATH=$PATH:$HOME/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# Success message
+echo "All tools and dependencies installed successfully! You can now run T-Recon using 'python main.py'."
