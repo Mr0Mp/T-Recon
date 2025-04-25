@@ -127,11 +127,28 @@ Just update config.py and define new logic inside tools/. The modular design mak
 
 Here's a simple ASCII representation of the tool. You can replace this with your own:
 
-_______ _______    _______    _______  
-|__   __|__   __|  |__   __|  |__   __| 
-   | |     | |        | |       | |    
-   | |     | |        | |       | |    
-   |_|     |_|        |_|       |_|
+               ...
+             ;::::;
+           ;::::; :;
+         ;:::::'   :;
+        ;:::::;     ;.
+       ,:::::'       ;           OOO\
+       ::::::;       ;          OOOOO\
+       ;:::::;       ;         OOOOOOOO
+      ,;::::::;     ;'         / OOOOOOO
+    ;:::::::::`. ,,,;.        /  / DOOOOOO
+  .';:::::::::::::::::;,     /  /     DOOOO
+ ,::::::;::::::;;;;::::;,   /  /        DOOO
+;`::::::`'::::::;;;::::: ,#/  /          DOOO
+:`:::::::`;::::::;;::: ;::#  /            DOOO
+::`:::::::`;:::::::: ;::::# /              DOO
+`:`:::::::`;:::::: ;::::::#/               DOO
+ :::`:::::::`;; ;:::::::::##                OO
+ ::::`:::::::`;::::::::;:::#                OO
+ `:::::`::::::::::::;'`:;::#                O
+  `:::::`::::::::;' /  / `:#
+   ::::::`:::::;'  /  /   `#
+Mr0Mp
 
 Feel free to enhance this section later with more complex ASCII art!
 
@@ -159,6 +176,38 @@ Created with passion by Mr0Mp
 ---
 
 ### 2. **Install Script (install.sh)**
+
+bash
+#!/bin/bash
+
+# Update and upgrade packages
+echo "Updating Termux and installing dependencies..."
+pkg update && pkg upgrade -y
+# Install Python and other necessary tools
+echo "Installing Python, Git, and curl..."
+pkg install python git curl wget nmap -y
+
+# Install Go for Go-based tools (httpx, subfinder, etc.)
+echo "Installing Go..."
+pkg install golang -y
+
+# Install required Python dependencies
+echo "Installing Python dependencies..."
+pip install -r requirements.txt
+
+# Install Go-based tools
+echo "Installing Go-based tools..."
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/ffuf/ffuf@latest
+
+# Add Go binary to PATH (optional)
+echo 'export PATH=$PATH:$HOME/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# Success message
+echo "All tools and dependencies installed successfully! You can now run T-Recon using 'python main.py'."
 
 3. FOLDER STRUCTURE
 
